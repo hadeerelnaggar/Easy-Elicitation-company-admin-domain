@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <!-- Title Page-->
+    <title>Login</title>
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"
+        rel="stylesheet">
+    <!-- Main CSS-->
+    <link href="/css/main.css" rel="stylesheet" media="all">
+    <script>  // this script is to check the user existance in db update
+        function validateLoginForm(form, event) {
+            event.preventDefault();
+            var result=true;
+            if(document.getElementById("emailerror").innerHTML != ""){
+                document.getElementById("emailerror").innerHTML = "";
+                form.email.style.borderColor = "black";
+            }
+            if(document.getElementById("error2").innerHTML != ""){
+                document.getElementById("error2").innerHTML = "";
+                form.password.style.borderColor = "black";
+            }
+            if (form.email.value == "") {
+                form.email.focus();
+                form.email.style.borderColor = "red";
+                document.getElementById("emailerror").innerHTML = "please enter email";
+                document.getElementById("emailerror").style.color = "red";
+                result = false;
+            }
+            if(form.password.value == ""){
+                form.password.focus();
+                form.password.style.borderColor = "red";
+                document.getElementById("error2").innerHTML = "please enter password";
+                document.getElementById("error2").style.color = "red";
+                result = false;
+            }
+            if(!result){
+                return result;
+            }
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (this.responseText !== "successfully loggedin") {
+                        alert("Invalid email or password")
+                    }
+                    else {
+                        document.location = "/newbusinessanalyst";
+                    }
+                }
+            };
+            xhttp.open("POST", "http://localhost:8081/login", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("email=" + form.email.value + "&password=" + form.password.value);
+            return true;
+        }
+        
+
+
+        
+    
+    </script>
+
+
+</head>
+
+<body>
+
+    <div class="page-wrapper bg-dark p-t-100 p-b-50">
+        <div class="wrapper wrapper--w900">
+            <div class="card card-6">
+                <div class="card-heading">
+                    <h2 class="title">Company Admin Login</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="" name="loginform" onsubmit="return validateLoginForm(this,event)">
+                        <div class="form-row">
+                            <div class="name">Email address</div>
+                            <div class="value">
+                                <div class="input-group">
+                                    <input class="input--style-6" type="email" name="email" id="email"
+                                        placeholder="example@email.com">
+                                    <div name="emailerror" id="emailerror"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="name">Password</div>
+                            <div class="value">
+                                <input class="input--style-6" type="password" name="password" id="password">
+                                <div name="error2" id="error2"></div>
+                                <a href="/forgotpassword">Forgot password?</a>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn--radius-2 btn--blue-2" type="submit">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

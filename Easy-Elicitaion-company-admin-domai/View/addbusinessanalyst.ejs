@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Add Business Analysts</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"
+        rel="stylesheet">
+    <link href="../css/main.css" rel="stylesheet" media="all">
+    <script>  // this script is to check the user existance in db update
+        function validateLoginForm(form, event) {
+            event.preventDefault();
+            var result = true;
+            if (document.getElementById("emailerror").innerHTML != "") {
+                document.getElementById("emailerror").innerHTML = "";
+                form.email.style.borderColor = "black";
+            }
+            if (document.getElementById("nameerror").innerHTML != "") {
+                document.getElementById("nameerror").innerHTML = "";
+                form.name.style.borderColor = "black";
+            }
+            if (form.email.value == "") {
+                form.email.focus();
+                form.email.style.borderColor = "red";
+                document.getElementById("emailerror").innerHTML = "please enter email";
+                document.getElementById("emailerror").style.color = "red";
+                result = false;
+            }
+            if (form.name.value == "") {
+                form.name.focus();
+                form.name.style.borderColor = "red";
+                document.getElementById("nameerror").innerHTML = "please enter username";
+                document.getElementById("nameerror").style.color = "red";
+                result = false;
+            }
+            if (!result) {
+                return result;
+            }
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (this.responseText === "email already exists") {
+                        document.getElementById("emailerror").innerHTML = this.responseText.toString()
+                        document.getElementById("emailerror").style.color = "red";
+                        form.email.style.borderColor = "red";
+                    }
+                    else {
+                        form.submit()
+                    }
+                }
+            };
+            xhttp.open("GET", "http://localhost:8081/checkemail?email=" + form.email.value, true);
+            xhttp.send();
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+    <div class="wrapper d-flex align-items-stretch">
+        <%- include('index.ejs', {page:"addbusinessanalysts"}); %>
+        <div id="content">
+            <div class="page-wrapper bg-light p-t-100 p-b-50">
+                <div class="wrapper wrapper--w900">
+                    <div class="card-heading">
+                        <h2 class="title-two">Add New Business Analyst</h2>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="/insertnewbusinessanalyst" name="loginform"
+                            onsubmit="return validateLoginForm(this,event)">
+                            <div class="form-row">
+                                <div class="name">Name</div>
+                                <div class="value">
+                                    <div class="input-group">
+                                        <input class="input--style-6" type="text" name="name" id="name"
+                                            placeholder="Enter new admin's name">
+                                        <div name="nameerror" id="nameerror"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="name">Email address</div>
+                                <div class="value">
+                                    <div class="input-group">
+                                        <input class="input--style-6" type="email" name="email" id="email"
+                                            placeholder="example@email.com">
+                                        <div name="emailerror" id="emailerror"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn--radius-2 btn--blue-2" type="submit">Add</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

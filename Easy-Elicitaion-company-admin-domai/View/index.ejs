@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+</head>
+
+<body>
+  <nav id="sidebar">
+    <h1><a href="/newbusinessanalyst" class="logo">Easy Elicitation Company admin Domain</a></h1>
+    <ul class="list-unstyled components mb-5">
+      <li <% if(page === "addbusinessanalysts"){ %> class="active" <% } %> >
+        <a href="/newbusinessanalyst"><span class="fa fa-user mr-3"></span>Add new Business Analyst</a>
+      </li>
+      <li <% if(page === "viewallbusinessanalysts"){ %> class="active" <% } %> >
+        <a href="/getallbusinessanalysts"><span class="fa fa-th-list mr-3"></span>View All Business Analysts in your Company</a>
+      </li>
+      <li <% if(page === "editpassword"){ %> class="active" <% } %> >
+        <a href="/editpasswordpage"><span class="fa fa-edit mr-3"></span>Edit Password</a>
+      </li>
+      <li <% if(page === "logout"){ %> class="active" <% } %> >
+        <a href="/logout"><span class="fa fa-sign-out mr-3"></span>Logout</a>
+      </li>
+    </ul>
+  </nav>
+</body>
+
+</html>
