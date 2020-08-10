@@ -53,7 +53,7 @@
                     }
                 }
             };
-            xhttp.open("GET", "http://localhost:8081/checkemail?email=" + form.email.value, true);
+            xhttp.open("GET", window.location.origin + "/checkemail?email=" + form.email.value, true);
             xhttp.send();
             return true;
         }

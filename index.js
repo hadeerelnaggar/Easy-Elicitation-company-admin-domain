@@ -24,7 +24,7 @@ app.use(session({
 
 
 app.use(function(req, res, next) {
-   res.header("Access-Control-Allow-Origin", 'http://localhost:8081'); // update to match the domain you will make the request from
+   res.header("Access-Control-Allow-Origin", req.protocol + '://' + req.get('host')); // update to match the domain you will make the request from
 
    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
@@ -39,7 +39,7 @@ app.use(function(req, res, next) {
 app.use(bodyParser.json());
  app.use('/',router); 
 
-var server = app.listen(8081, function () {
+var server = app.listen(process.env.PORT || 8081, function () {
    var host = server.address().address
    var port = server.address().port   
    console.log("app listening at http://:%s", port)

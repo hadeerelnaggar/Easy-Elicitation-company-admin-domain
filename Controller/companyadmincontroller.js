@@ -62,7 +62,7 @@ exports.editpassword = async function (req, res) {
                     var updateresult = await companyAdminModel.updateCompanyAdminTokenAndExpireToken(token, expireToken, email);
                     var emailsubject = "please reset your password"
                     var emailtext = "Please use the following link to reset your password \n"
-                        + "http://localhost:8081/resetpassword/" + token + "?email=" + email
+                        + req.protocol + '://' + req.get('host') + "/resetpassword/" + token + "?email=" + email
                     sendemail.sendToNewAdmin(email, emailsubject, emailtext)
                     res.send("please check your email to reset password")
                 }
