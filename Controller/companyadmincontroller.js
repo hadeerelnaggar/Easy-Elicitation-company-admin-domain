@@ -47,8 +47,8 @@ exports.editpassword = async function (req, res) {
     }
 },
     //called when forgot password
-    exports.sendresetpasswordemail = function (req, res) {
-        var result = companyAdminModel.getCompanyAdminByEmail(req.query.email)
+    exports.sendresetpasswordemail = async function (req, res) {
+        var result = await companyAdminModel.getCompanyAdminByEmail(req.query.email)
         if (result.length == 0) {
             res.send("user not found")
         }
